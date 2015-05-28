@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+    <title>Peerstream</title>
+
+    <script src="js/jquery.min.js"></script>
+
+    <link href="css/animate.css" rel="stylesheet" type="text/css">
+    <link href="css/font.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <header><h1 class="animated fadeInDown">peerstream</h1></header>
+    <main></main>
+</body>
+<script>
+    // Require modules here
+    var windows = require("windows");
+    
+    var peerstream = {
+        config: {
+            animation: {
+                in: "fadeInUp",
+                out: "zoomOut"
+            }
+        },
+        
+        exec: {
+            createObject: function(content, aftercreate, action) {
+                var obj = $("main").append(content).children()[$("main").children().length - 1]; // This appends and gets the obj
+                
+                if (action) {
+                    console.log("got!");
+                    console.log($(obj).find("a")[0]);
+                   $($(obj).find("a")[0]).click( function() { action() } );
+                }
+                
+                $(obj).addClass("animated " + peerstream.config.animation.in);
+                $(obj).one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function() {
+                    $(obj).removeClass("animated " + peerstream.config.animation.in);
+                    if (aftercreate) aftercreate();
+                });
+                
+                return obj;
+            },
+            
+            destroyObject: function(obj, callback) {
+                $(obj).addClass("animated " + peerstream.config.animation.out);
+                $(obj).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                    $(obj).remove();
+                    if (callback) callback();
+                });
+            },
+            
+            setDefault: function() {
+                    alert("Cannot use peerstream as default torrent handler yet -- this is a work in progress.");
+                    peerstream.exec.destroyObject(peerstream.refobjs.defaults);
+            }
+        },
+        
+        refobjs: {
+        }
+    }
+    
+    // Check our operating system:
+    switch (process.platform) {
+        case "win32":
+            console.info("We appear to be running on Windows.");
+            
+            // Torrent file associations
+            if (windows.associations()[".torrent"]) {
+                peerstream.refobjs.defaults = peerstream.exec.createObject("<section><h1>System Defaults</h1><p>Currently, " + windows.associations()[".torrent"] + " is the default application for handling torrent files.</p><a>Use Peerstream Instead</a></section>",
+                function() {
+                    peerstream.exec.createObject("<section><h1>Hello World</h1></section>")
+                },
+                function() {
+                    peerstream.exec.setDefault();
+                });
+            }
+            break;
+        case "linux":
+            console.info("We appear to be running on Linux.");
+            break;
+        case "darwin":
+            console.info("We appear to be running on OS X.");
+            break;
+        default:
+            console.warn("We are running on an unknown OS. (" + process.platform + ")");    
+    }
+</script>

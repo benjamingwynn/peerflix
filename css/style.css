@@ -1,0 +1,73 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Roboto", sans-serif;
+}
+
+body {
+	background: white;
+    overflow-x: hidden;
+}
+
+header {
+	top: 0;
+	background: DeepSkyBlue;
+	position: absolute;
+	width: 100%;
+	z-index: -1;
+	height: 20rem
+}
+
+h1 {
+	color: slategray;
+	font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+p {
+	color: lightslategray;
+}
+
+header h1 {
+	font-size: 6rem;
+	font-weight: 200;
+	text-align: center;
+	color: white;
+	padding: 2rem;
+}
+
+main {
+	margin: 12rem auto 0 auto;
+}
+
+section {
+	width: 60%;
+	padding: 1rem;
+	background: white;
+	
+	box-shadow: 0 0.1rem 0.25rem rgba(90, 90, 90, 0.6);
+	border-radius: 0.2rem;
+	text-align: center;
+	margin: 1rem auto 1rem auto;
+}
+
+a {
+    display: block;
+    
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 400;
+    
+    text-align: center;
+    width: 60%;
+    
+    margin: 1rem auto 1rem auto;
+    border-style: solid;
+    border-color: slategray;
+    border-radius: 1rem;
+    border-width: 0.15rem;
+    font-size: 1rem;
+    padding: 1rem;
+    color: slategray;
+    background: none;
+}
